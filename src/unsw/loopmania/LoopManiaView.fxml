@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<!-- TODO = modify and expand the GUI? -->
+<!-- anchorPaneRoot is the background of the main game -->
+
+<AnchorPane fx:id="anchorPaneRoot" onKeyPressed="#handleKeyPress" prefHeight="276.0" prefWidth="233.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <!-- HBox is used to stack items horizontally left to right -->
+   <HBox prefHeight="276.0" prefWidth="218.0">
+      <!-- VBox is used to stack items vertically top to bottom -->
+      <VBox prefHeight="138.0" prefWidth="13.0">
+         <children>
+             <!-- squares contains the path, buildings, character, and enemies -->
+            <GridPane fx:id="squares" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+               <columnConstraints>
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+               </rowConstraints>
+               <children>
+
+               </children>
+            </GridPane>
+
+            <!-- this BorderPane contains the ground under the cards and the cards -->
+            <BorderPane>
+               <bottom>
+                     <!-- cards GridPane holds the cards which can be used on the map -->
+                     <GridPane fx:id="cards" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+                        <columnConstraints>
+                           <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                           <RowConstraints />
+                        </rowConstraints>
+                        <children>
+
+                        </children>
+                     </GridPane>
+               </bottom>
+            </BorderPane>
+         </children>
+      </VBox>
+      <VBox prefHeight="234.0" prefWidth="172.0">
+         <children>
+            <!-- equippedItems contains the equipment equipped by the character in special slots -->
+            <!-- TODO = extend this to have slots for equipping armour, shields, helmets, and any other equippable items -->
+            <GridPane fx:id="equippedItems" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+               <children>
+                  <!-- swordCell is the cell where a sword intended to be equipped will be dragged by the human player -->
+                  <ImageView id="swordSlot" fx:id="swordSlot" GridPane.rowIndex="1">    
+                     <image>
+                        <Image url="@../../images/sword_unequipped.png" />
+                     </image>
+                  </ImageView>
+                  <!-- blankCell is an empty cell -->
+                  <ImageView id="armourSlot" fx:id="armourSlot" GridPane.columnIndex="1" GridPane.rowIndex="1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
+                     <image>
+                        <Image url="@../../images/empty_slot.png" />
+                     </image>
+                  </ImageView>
+                  <!-- shieldCell is the cell where a shield intended to be equipped will be dragged by the human player -->
+                  <ImageView id="shieldSlot" fx:id="shieldSlot" GridPane.columnIndex="2" GridPane.rowIndex="1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
+                     <image>
+                        <Image url="@../../images/shield_unequipped.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="helmetSlot" fx:id="helmetSlot" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@../../images/helmet_slot.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+
+            <!-- unequippedInventory is for unequipped items, which can be dragged into the equipped inventory -->
+            <GridPane fx:id="unequippedInventory" onMouseClicked="#handleMouseClick" prefHeight="0.0" prefWidth="122.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+               <columnConstraints>
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+               </rowConstraints>
+               <children>
+                  
+               </children>
+            </GridPane>
+            <Label fx:id="shopNotes" prefHeight="15.0" prefWidth="120.0" text="Select item to sell">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="sellButton" mnemonicParsing="false" onAction="#handleSellButton" prefHeight="15.0" prefWidth="70.0" text="sell" textAlignment="CENTER" />
+            <HBox prefWidth="123.0">
+               <children>
+                  <ChoiceBox fx:id="shopList" prefHeight="15.0" prefWidth="70.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ChoiceBox>
+                  <Button fx:id="buyButton" mnemonicParsing="false" onAction="#handleBuyButton" prefHeight="15.0" prefWidth="70.0" text="buy" textAlignment="CENTER" />
+               </children>
+            </HBox>
+
+            <!-- clicking this button returns the human player to the main menu -->
+            <Button onAction="#switchToMainMenu" prefHeight="15.0" prefWidth="123.0" text="Exit to Main Menu" />
+            <Label prefHeight="18.0" prefWidth="171.0" text="   Press X to use Health Potion ">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="171.0" text="   Press H to for help ">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <VBox prefHeight="126.0" prefWidth="207.0">
+               <children>
+                  <GridPane prefHeight="236.0" prefWidth="184.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="29.0" minHeight="4.0" prefHeight="7.0" />
+                      <RowConstraints maxHeight="32.0" minHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="31.0" minHeight="0.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="0.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="13.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="10.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="49.0" GridPane.rowIndex="4" />
+                        <Rectangle fx:id="HealthBar" arcHeight="5.0" arcWidth="5.0" fill="#ff5d1f" height="15.0" stroke="BLACK" strokeType="INSIDE" width="42.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Text fx:id="healthNum" strokeType="OUTSIDE" strokeWidth="0.0" text="  100" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <ImageView fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../../images/gold_pile.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="XP" textFill="#ed01dd" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Text fx:id="goldNum" strokeType="OUTSIDE" strokeWidth="0.0" text="   0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Text fx:id="XPNum" strokeType="OUTSIDE" strokeWidth="0.0" text="   0 " GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <ImageView fitHeight="27.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                           <image>
+                              <Image url="@../../images/heart.png" />
+                           </image>
+                        </ImageView>
+                        <Rectangle fx:id="GoldBar" arcHeight="5.0" arcWidth="5.0" fill="#fff200" height="15.0" stroke="BLACK" strokeType="INSIDE" width="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Rectangle fx:id="XPBar" arcHeight="5.0" arcWidth="5.0" fill="#07a1eb" height="15.0" stroke="BLACK" strokeType="INSIDE" width="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+            <GridPane fx:id="soldiersBoard" prefHeight="71.0" prefWidth="208.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </children>
+      </VBox>
+   </HBox>
+</AnchorPane>
